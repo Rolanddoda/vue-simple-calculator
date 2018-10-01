@@ -61,12 +61,8 @@
 
 		computed: {
     	screen_text() {
-    		let text = this.first_number + this.action + this.second_number
-		    text.toString().length > 11
-			    ? this.error_message = 'There are more than 11 chars, but 11 displayed'
-			    : ''
-
-		    return text.slice(0,11) || 0
+    		const text = this.first_number + this.action + this.second_number
+		    return text || 0
 	    }
 		},
 
@@ -80,6 +76,11 @@
 				if (new_val && !new_val.toString().includes('.')) {
 					this.second_number = Number(new_val)
 				}
+			},
+			screen_text(new_val) {
+				new_val.toString().length > 11
+					? this.error_message = 'There are more than 11 chars, but 11 displayed'
+					: ''
 			}
 		},
 
@@ -102,13 +103,16 @@
 			},
 
 			manage_button_action(button) {
+				if (this[this.which_number] !== '')
+					this[this.which_number] = Number(this[this.which_number])
+
 				switch (button.action) {
 					case 'c':
 						this.first_number = this.second_number = this.action = this.last_operation = ''
 						this.which_number = 'first_number'
 						break
 					case '+/-':
-						this.second_number && this.add_to_number(null, true)
+						this[this.which_number] = -this[this.which_number]
 						break
 					case '/':
 						if ((this.first_number === '' && this.second_number === '') || this.error_message)
@@ -165,13 +169,25 @@
 						this.which_number = 'second_number'
 						this.action = '+'
 						break
+					case  '.':
+						if(this[this.which_number].toString().includes('.')) {
+							this.error_message = 'Cannot add double dot'
+							return
+						} else
+								this.error_message = ''
+
+						if(this[this.which_number] === '')
+							this[this.which_number] = '0.'
+						else
+							this[this.which_number] += '.'
+
+						break
 				}
 			},
 
 			get_and_display_result() {
 				const calculation = this.screen_text.replace(/÷/g, '/')
-				let result = eval(calculation)
-				return result
+				return Number(parseFloat(eval(calculation)).toPrecision(11))
 			}
 
 		}
