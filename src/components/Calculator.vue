@@ -62,7 +62,12 @@
 		computed: {
     	screen_text() {
     		const text = this.first_number + this.action + this.second_number
-		    return text || 0
+		    if (text.toString().length > 11)
+		    	this.error_message = 'There are more than 11 chars, but 11 displayed'
+		    else
+		    	this.error_message = ''
+
+		    return text.toString().slice(0, 11) || 0
 	    }
 		},
 
@@ -170,7 +175,7 @@
 						this.action = '+'
 						break
 					case  '.':
-						if(this[this.which_number].toString().includes('.')) {
+						if(this[this.which_number].toString().includes('.') || this.error_message) {
 							this.error_message = 'Cannot add double dot'
 							return
 						} else
@@ -182,10 +187,24 @@
 							this[this.which_number] += '.'
 
 						break
+					case  '^':
+						if (this[this.which_number] === '' || this.error_message)
+							return
+						if (this.first_number !== '' && this.second_number !== ''){
+							this.last_operation += `(${this.screen_text})`
+							this.first_number = this.get_and_display_result()
+							this.second_number = ''
+						}
+						this.which_number = 'second_number'
+						this.action = '^'
+						break
 				}
 			},
 
 			get_and_display_result() {
+				if (this.screen_text.toString().includes('^'))
+					return Math.pow(this.first_number, this.second_number)
+
 				const calculation = this.screen_text.replace(/÷/g, '/')
 				return Number(parseFloat(eval(calculation)).toPrecision(11))
 			}
