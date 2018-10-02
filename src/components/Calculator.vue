@@ -37,8 +37,8 @@
 	    show_tooltip: false,
 	    error_message: '',
       buttons: [
-        { text: 'C', class: 'clear-button', action: 'c', is_number: false },
-        { text: '+/-', class: 'neg-pos-button', action: '+/-', is_number: false },
+        { text: 'Clear All', class: 'clear-all-button', action: 'c_all', is_number: false },
+        { text: 'Clear', class: 'clear-button', action: 'c', is_number: false },
         { text: 'x <sup>x</sup>', class: 'exp-button', action: '^', is_number: false },
         { text: '/', class: 'divide-button', action: '/', is_number: false },
         { text: '7', class: 'seven-button', action: '7', is_number: true },
@@ -55,6 +55,7 @@
         { text: '+', class: 'plus-button', action: '+', is_number: false },
         { text: '0', class: 'zero-button', action: '0', is_number: true },
         { text: '.', class: 'point-button', action: '.', is_number: false },
+        { text: '+/-', class: 'neg-pos-button', action: '+/-', is_number: false },
         { text: '=', class: 'equal-button', action: '=', is_number: false },
       ]
     }),
@@ -74,12 +75,12 @@
 		watch: {
 			first_number(new_val) {
 				if (new_val && !new_val.toString().includes('.')) {
-					this.first_number = Number(new_val)
+					this.first_number = Number.isInteger(Number(new_val)) ? Number(new_val) : 0
 				}
 			},
 			second_number(new_val) {
 				if (new_val && !new_val.toString().includes('.')) {
-					this.second_number = Number(new_val)
+					this.second_number = Number.isInteger(Number(new_val)) ? Number(new_val) : 0
 				}
 			},
 			screen_text(new_val) {
@@ -112,9 +113,17 @@
 					this[this.which_number] = Number(this[this.which_number])
 
 				switch (button.action) {
-					case 'c':
+					case 'c_all':
 						this.first_number = this.second_number = this.action = this.last_operation = ''
 						this.which_number = 'first_number'
+						break
+					case 'c':
+						if (this.which_number === 'second_number' && this.second_number === '') {
+							this.action = ''
+							this.which_number = 'first_number'
+						}else {
+							this[this.which_number] = this[this.which_number].toString().slice(0, -1)
+						}
 						break
 					case '+/-':
 						this[this.which_number] = -this[this.which_number]
@@ -206,7 +215,8 @@
 					return Math.pow(this.first_number, this.second_number)
 
 				const calculation = this.screen_text.replace(/÷/g, '/')
-				return Number(parseFloat(eval(calculation)).toPrecision(11))
+				const expression = calculation.split('').join(' ')
+				return Number(parseFloat(eval(expression)).toPrecision(11))
 			}
 
 		}
@@ -296,9 +306,9 @@
 		    border: 1px solid #F26462;
 	    }
 
-	    .zero-button {
-		    grid-column: span 2;
-	    }
+	    /*.zero-button {*/
+		    /*grid-column: span 2;*/
+	    /*}*/
 
 	    .equal-button {
 		    background: $deep-red;
