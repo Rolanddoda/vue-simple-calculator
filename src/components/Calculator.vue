@@ -12,20 +12,16 @@
 			this is evaluated as whole operation.
 		</div>
 
-    <div class="buttons-wrapper">
-	    <template v-for="button in buttons">
-		    <div :class="['button', button.class]" @click="add_to_screen(button)">
-			    <span v-html="button.text"></span>
-		    </div>
-	    </template>
-    </div>
+    <calculator-buttons @add-to-screen="add_to_screen" />
 
 	</div>
 </template>
 
 <script>
+	import CalculatorButtons from '@/components/CalculatorButtons.vue'
 	export default {
     name: 'Calculator',
+		components: { CalculatorButtons },
 
     data: () => ({
 	    first_number: '',
@@ -36,28 +32,6 @@
 	    last_operation_result: 0,
 	    show_tooltip: false,
 	    error_message: '',
-      buttons: [
-        { text: 'Clear All', class: 'clear-all-button', action: 'c_all', is_number: false },
-        { text: 'Clear', class: 'clear-button', action: 'c', is_number: false },
-        { text: 'x <sup>x</sup>', class: 'exp-button', action: '^', is_number: false },
-        { text: '/', class: 'divide-button', action: '/', is_number: false },
-        { text: '7', class: 'seven-button', action: '7', is_number: true },
-        { text: '8', class: 'eight-button', action: '8', is_number: true },
-        { text: '9', class: 'nine-button', action: '9', is_number: true },
-        { text: '*', class: 'multiply-button', action: '*', is_number: false },
-        { text: '4', class: 'four-button', action: '4', is_number: true },
-        { text: '5', class: 'five-button', action: '5', is_number: true },
-        { text: '6', class: 'six-button', action: '6', is_number: true },
-        { text: '-', class: 'minus-button', action: '-', is_number: false },
-        { text: '1', class: 'one-button', action: '1', is_number: true },
-        { text: '2', class: 'two-button', action: '2', is_number: true },
-        { text: '3', class: 'three-button', action: '3', is_number: true },
-        { text: '+', class: 'plus-button', action: '+', is_number: false },
-        { text: '0', class: 'zero-button', action: '0', is_number: true },
-        { text: '.', class: 'point-button', action: '.', is_number: false },
-        { text: '+/-', class: 'neg-pos-button', action: '+/-', is_number: false },
-        { text: '=', class: 'equal-button', action: '=', is_number: false },
-      ]
     }),
 
 		computed: {
@@ -215,7 +189,16 @@
 					return Math.pow(this.first_number, this.second_number)
 
 				const calculation = this.screen_text.replace(/÷/g, '/')
-				const expression = calculation.split('').join(' ')
+				let expression_in_array_format = calculation.split('')
+
+				/* Serves for adding necessary spaces to expression (due to eval issues) */
+				expression_in_array_format.forEach((item, index) => {
+					if (!Number.isInteger(Number(item))) { //if item it is not integer
+						expression_in_array_format[index] += ' '
+					}
+				})
+
+				const expression = expression_in_array_format.join('')
 				return Number(parseFloat(eval(expression)).toPrecision(11))
 			}
 
@@ -282,38 +265,6 @@
         padding: 10px;
 	      overflow: hidden;
       }
-    }
-
-    .buttons-wrapper {
-      background: $light-red;
-      height: 70%;
-      width: 100%;
-      display: grid;
-      grid-template-columns: 25% 25% 25% 25%;
-      align-items: center;
-      justify-items: center;
-      color: white;
-	    border-radius: 0 0 15px 15px;
-	    overflow: hidden;
-	    
-	    .button {
-		    cursor: pointer;
-		    width: 100%;
-		    height: 100%;
-		    display: flex;
-		    justify-content: center;
-		    align-items: center;
-		    border: 1px solid #F26462;
-	    }
-
-	    /*.zero-button {*/
-		    /*grid-column: span 2;*/
-	    /*}*/
-
-	    .equal-button {
-		    background: $deep-red;
-	    }
-
     }
 
   }
