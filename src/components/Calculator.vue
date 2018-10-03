@@ -82,104 +82,143 @@
 				}
 			},
 
+			clear_screen() {
+				this.first_number = this.second_number = this.action = this.last_operation = ''
+				this.which_number = 'first_number'
+			},
+
+			remove_single_char() {
+				if (this.which_number === 'second_number' && this.second_number === '') {
+					this.action = ''
+					this.which_number = 'first_number'
+				}else { // remove the last char from the string
+					this[this.which_number] = this[this.which_number].toString().slice(0, -1)
+				}
+			},
+
+			divide() {
+				if ((this.first_number === '' && this.second_number === '') || this.error_message)
+					return
+				if (this.first_number !== '' && this.second_number !== ''){
+					this.last_operation += `(${this.screen_text})`
+					this.first_number = this.get_and_display_result()
+					this.second_number = ''
+				}
+				this.which_number = 'second_number'
+				this.action = '÷'
+			},
+
+			multiply() {
+				if ((this.first_number === '' && this.second_number === '') || this.error_message)
+					return
+				if (this.first_number !== '' && this.second_number !== ''){
+					this.last_operation += `(${this.screen_text})`
+					this.first_number = this.get_and_display_result()
+					this.second_number = ''
+				}
+				this.which_number = 'second_number'
+				this.action = '*'
+			},
+
+			run_expression() { //executed when '=' pressed
+				if ((this.first_number === '' && this.second_number === '') || this.error_message)
+					return
+				if (this.first_number !== '' && this.second_number !== ''){
+					this.last_operation += `(${this.screen_text})`
+					this.first_number = this.get_and_display_result()
+					this.second_number = ''
+				}
+				this.which_number = 'first_number'
+				this.action = ''
+			},
+
+			subtract() {
+				if ((this.first_number === '' && this.second_number === '') || this.error_message)
+					return
+				if (this.first_number !== '' && this.second_number !== ''){
+					this.last_operation += `(${this.screen_text})`
+					this.first_number = this.get_and_display_result()
+					this.second_number = ''
+				}
+				this.which_number = 'second_number'
+				this.action = '-'
+			},
+
+			add() {
+				if ((this.first_number === '' && this.second_number === '') || this.error_message)
+					return
+				if (this.first_number !== '' && this.second_number !== ''){
+					this.last_operation += `(${this.screen_text})`
+					this.first_number = this.get_and_display_result()
+					this.second_number = ''
+				}
+				this.which_number = 'second_number'
+				this.action = '+'
+			},
+
+			make_float() { //executed when '.' pressed
+				if(this[this.which_number].toString().includes('.') || this.error_message) {
+					this.error_message = 'Cannot add double dot'
+					return
+				} else
+					this.error_message = ''
+
+				if(this[this.which_number] === '')
+					this[this.which_number] = '0.'
+				else
+					this[this.which_number] += '.'
+			},
+
+			power() { //executed when '^' pressed
+				if (this[this.which_number] === '' || this.error_message)
+					return
+				if (this.first_number !== '' && this.second_number !== ''){
+					this.last_operation += `(${this.screen_text})`
+					this.first_number = this.get_and_display_result()
+					this.second_number = ''
+				}
+				this.which_number = 'second_number'
+				this.action = '^'
+			},
+
+			toggle_number_sign() {
+				this[this.which_number] = -this[this.which_number]
+			},
+
 			manage_button_action(button) {
 				if (this[this.which_number] !== '')
 					this[this.which_number] = Number(this[this.which_number])
 
 				switch (button.action) {
 					case 'c_all':
-						this.first_number = this.second_number = this.action = this.last_operation = ''
-						this.which_number = 'first_number'
+						this.clear_screen()
 						break
 					case 'c':
-						if (this.which_number === 'second_number' && this.second_number === '') {
-							this.action = ''
-							this.which_number = 'first_number'
-						}else {
-							this[this.which_number] = this[this.which_number].toString().slice(0, -1)
-						}
+						this.remove_single_char()
 						break
 					case '+/-':
-						this[this.which_number] = -this[this.which_number]
+						this.toggle_number_sign()
 						break
 					case '/':
-						if ((this.first_number === '' && this.second_number === '') || this.error_message)
-							return
-						if (this.first_number !== '' && this.second_number !== ''){
-							this.last_operation += `(${this.screen_text})`
-							this.first_number = this.get_and_display_result()
-							this.second_number = ''
-						}
-						this.which_number = 'second_number'
-						this.action = '÷'
+						this.divide()
 						break
 					case '*':
-						if ((this.first_number === '' && this.second_number === '') || this.error_message)
-							return
-						if (this.first_number !== '' && this.second_number !== ''){
-							this.last_operation += `(${this.screen_text})`
-							this.first_number = this.get_and_display_result()
-							this.second_number = ''
-						}
-						this.which_number = 'second_number'
-						this.action = '*'
+						this.multiply()
 						break
 					case '=':
-						if ((this.first_number === '' && this.second_number === '') || this.error_message)
-							return
-						if (this.first_number !== '' && this.second_number !== ''){
-							this.last_operation += `(${this.screen_text})`
-							this.first_number = this.get_and_display_result()
-							this.second_number = ''
-						}
-						this.which_number = 'first_number'
-						this.action = ''
+						this.run_expression()
 						break
 					case '-':
-						if ((this.first_number === '' && this.second_number === '') || this.error_message)
-							return
-						if (this.first_number !== '' && this.second_number !== ''){
-							this.last_operation += `(${this.screen_text})`
-							this.first_number = this.get_and_display_result()
-							this.second_number = ''
-						}
-						this.which_number = 'second_number'
-						this.action = '-'
+						this.subtract()
 						break
 					case '+':
-						if ((this.first_number === '' && this.second_number === '') || this.error_message)
-							return
-						if (this.first_number !== '' && this.second_number !== ''){
-							this.last_operation += `(${this.screen_text})`
-							this.first_number = this.get_and_display_result()
-							this.second_number = ''
-						}
-						this.which_number = 'second_number'
-						this.action = '+'
+						this.add()
 						break
 					case  '.':
-						if(this[this.which_number].toString().includes('.') || this.error_message) {
-							this.error_message = 'Cannot add double dot'
-							return
-						} else
-								this.error_message = ''
-
-						if(this[this.which_number] === '')
-							this[this.which_number] = '0.'
-						else
-							this[this.which_number] += '.'
-
+						this.make_float()
 						break
 					case  '^':
-						if (this[this.which_number] === '' || this.error_message)
-							return
-						if (this.first_number !== '' && this.second_number !== ''){
-							this.last_operation += `(${this.screen_text})`
-							this.first_number = this.get_and_display_result()
-							this.second_number = ''
-						}
-						this.which_number = 'second_number'
-						this.action = '^'
+						this.power()
 						break
 				}
 			},
@@ -193,7 +232,7 @@
 
 				/* Serves for adding necessary spaces to expression (due to eval issues) */
 				expression_in_array_format.forEach((item, index) => {
-					if (!Number.isInteger(Number(item))) { //if item it is not integer
+					if (!Number.isInteger(Number(item)) && item !== '.') { //if item it is not integer nor equal to .
 						expression_in_array_format[index] += ' '
 					}
 				})
