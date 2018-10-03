@@ -82,6 +82,14 @@
 				}
 			},
 
+			manage_button_action(button) {
+				if (this[this.which_number] !== '')
+					this[this.which_number] = Number(this[this.which_number])
+
+				this[button.method_name]()
+			},
+
+
 			clear_screen() {
 				this.first_number = this.second_number = this.action = this.last_operation = ''
 				this.which_number = 'first_number'
@@ -96,7 +104,7 @@
 				}
 			},
 
-			divide() {
+			calculate_expression(expression, which_number = 'second_number') {
 				if ((this.first_number === '' && this.second_number === '') || this.error_message)
 					return
 				if (this.first_number !== '' && this.second_number !== ''){
@@ -104,56 +112,32 @@
 					this.first_number = this.get_and_display_result()
 					this.second_number = ''
 				}
-				this.which_number = 'second_number'
-				this.action = '÷'
+				this.which_number = which_number
+				this.action = expression
+			},
+
+			divide() {
+				this.calculate_expression('÷')
 			},
 
 			multiply() {
-				if ((this.first_number === '' && this.second_number === '') || this.error_message)
-					return
-				if (this.first_number !== '' && this.second_number !== ''){
-					this.last_operation += `(${this.screen_text})`
-					this.first_number = this.get_and_display_result()
-					this.second_number = ''
-				}
-				this.which_number = 'second_number'
-				this.action = '*'
-			},
-
-			run_expression() { //executed when '=' pressed
-				if ((this.first_number === '' && this.second_number === '') || this.error_message)
-					return
-				if (this.first_number !== '' && this.second_number !== ''){
-					this.last_operation += `(${this.screen_text})`
-					this.first_number = this.get_and_display_result()
-					this.second_number = ''
-				}
-				this.which_number = 'first_number'
-				this.action = ''
+				this.calculate_expression('*')
 			},
 
 			subtract() {
-				if ((this.first_number === '' && this.second_number === '') || this.error_message)
-					return
-				if (this.first_number !== '' && this.second_number !== ''){
-					this.last_operation += `(${this.screen_text})`
-					this.first_number = this.get_and_display_result()
-					this.second_number = ''
-				}
-				this.which_number = 'second_number'
-				this.action = '-'
+				this.calculate_expression('-')
 			},
 
 			add() {
-				if ((this.first_number === '' && this.second_number === '') || this.error_message)
-					return
-				if (this.first_number !== '' && this.second_number !== ''){
-					this.last_operation += `(${this.screen_text})`
-					this.first_number = this.get_and_display_result()
-					this.second_number = ''
-				}
-				this.which_number = 'second_number'
-				this.action = '+'
+				this.calculate_expression('+')
+			},
+
+			power() { //executed when '^' pressed
+				this.calculate_expression('^')
+			},
+
+			run_expression() { //executed when '=' pressed
+				this.calculate_expression('', 'first_number')
 			},
 
 			make_float() { //executed when '.' pressed
@@ -169,58 +153,9 @@
 					this[this.which_number] += '.'
 			},
 
-			power() { //executed when '^' pressed
-				if (this[this.which_number] === '' || this.error_message)
-					return
-				if (this.first_number !== '' && this.second_number !== ''){
-					this.last_operation += `(${this.screen_text})`
-					this.first_number = this.get_and_display_result()
-					this.second_number = ''
-				}
-				this.which_number = 'second_number'
-				this.action = '^'
-			},
 
 			toggle_number_sign() {
 				this[this.which_number] = -this[this.which_number]
-			},
-
-			manage_button_action(button) {
-				if (this[this.which_number] !== '')
-					this[this.which_number] = Number(this[this.which_number])
-
-				switch (button.action) {
-					case 'c_all':
-						this.clear_screen()
-						break
-					case 'c':
-						this.remove_single_char()
-						break
-					case '+/-':
-						this.toggle_number_sign()
-						break
-					case '/':
-						this.divide()
-						break
-					case '*':
-						this.multiply()
-						break
-					case '=':
-						this.run_expression()
-						break
-					case '-':
-						this.subtract()
-						break
-					case '+':
-						this.add()
-						break
-					case  '.':
-						this.make_float()
-						break
-					case  '^':
-						this.power()
-						break
-				}
 			},
 
 			get_and_display_result() {
