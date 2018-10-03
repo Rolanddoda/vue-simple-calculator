@@ -9,8 +9,11 @@
 </template>
 
 <script>
+	import { keyboard_events } from "./KeyboardEvents";
+
 	export default {
 		name: 'CalculatorButtons',
+		mixins: [keyboard_events],
 
 		data: () => ({
 			buttons: [
