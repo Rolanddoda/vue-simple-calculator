@@ -1,17 +1,13 @@
 <template>
 	<div class="calculator">
 
-    <div class="screen-wrapper">
-      <span class="display-value"> {{ screen_text }} </span>
-	    <div class="error-message" v-if="error_message"> ❗️ {{ error_message }} ❗️ </div>
-	    <div class="last-operation" @mouseover="show_tooltip = true" @mouseleave="show_tooltip = false" v-if="last_operation"> {{ last_operation }} </div>
-    </div>
-
-		<div class="tooltip" v-if="show_tooltip">
-			Note! Here is displayed how you perform the calculations. Something like history. Don't confuse yourself thinking that
-			this is evaluated as whole operation.
-		</div>
-
+		<screen-wrapper
+				:screen-text="screen_text"
+        :error-message="error_message"
+        :last-operation="last_operation"
+        :show-tooltip.sync="show_tooltip"
+		/>
+		<calculator-tooltip :show="show_tooltip" />
     <calculator-buttons @add-to-screen="add_to_screen" />
 
 	</div>
@@ -19,9 +15,12 @@
 
 <script>
 	import CalculatorButtons from '@/components/CalculatorButtons.vue'
+	import CalculatorTooltip from '@/components/CalculatorTooltip.vue'
+	import ScreenWrapper from '@/components/ScreenWrapper.vue'
+
 	export default {
     name: 'Calculator',
-		components: { CalculatorButtons },
+		components: { CalculatorButtons, CalculatorTooltip, ScreenWrapper },
 
     data: () => ({
 	    first_number: '',
@@ -190,56 +189,5 @@
     position: relative;
     width: 320px;
     height: 80%;
-
-	  .tooltip {
-		  position: absolute;
-		  top: -65px;
-		  background: aqua;
-		  left: -55%;
-		  padding: 15px;
-		  border-radius: 15px 15px 0;
-	  }
-
-    .screen-wrapper {
-	    position: relative;
-      background: $deep-blue;
-      height: 30%;
-      width: 100%;
-      border-radius: 15px 15px 0 0;
-      display: grid;
-      justify-content: end;
-      align-items: end;
-      color: white;
-      font-size: 50px;
-
-	    .error-message {
-		    position: absolute;
-		    width: 100%;
-		    top: 0;
-		    text-align: right;
-		    font-size: 12px;
-		    padding: 10px;
-		    color: red;
-	    }
-
-	    .last-operation {
-		    position: absolute;
-		    width: 100%;
-		    top: 35px;
-		    text-align: right;
-		    font-size: 30px;
-		    max-height: 70px;
-		    overflow: auto;
-	    }
-
-      > .display-value {
-	      position: absolute;
-	      width: 99%;
-	      text-align: right;
-        padding: 10px;
-	      overflow: hidden;
-      }
-    }
-
   }
 </style>
