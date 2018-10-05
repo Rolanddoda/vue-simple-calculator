@@ -1,17 +1,17 @@
 <template>
   <div id="app">
     <calculator />
+    <calculator-informations />
   </div>
 </template>
 
 <script>
   import Calculator from './components/Calculator.vue'
+  import CalculatorInformations from '@/components/CalculatorInformations.vue'
 
   export default {
     name: 'app',
-    components: {
-      Calculator
-    }
+    components: { Calculator, CalculatorInformations }
   }
 </script>
 
@@ -31,5 +31,7 @@
     display: grid;
     justify-content: center;
     align-items: center;
+	  background: url('./assets/background.jpg') center center no-repeat;
+	  background-size: cover;
   }
 </style>

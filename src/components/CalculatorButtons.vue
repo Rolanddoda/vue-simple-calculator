@@ -9,7 +9,7 @@
 </template>
 
 <script>
-	import { keyboard_events } from "./KeyboardEvents";
+	import { keyboard_events } from "../services/KeyboardEvents";
 
 	export default {
 		name: 'CalculatorButtons',
@@ -62,6 +62,7 @@
 		color: white;
 		border-radius: 0 0 15px 15px;
 		overflow: hidden;
+		user-select: none;
 
 	.button {
 		cursor: pointer;

@@ -17,9 +17,11 @@
 	import CalculatorButtons from '@/components/CalculatorButtons.vue'
 	import CalculatorTooltip from '@/components/CalculatorTooltip.vue'
 	import ScreenWrapper from '@/components/ScreenWrapper.vue'
+	import { calculator_actions } from "@/services/CalculatorActions"
 
 	export default {
     name: 'Calculator',
+		mixins: [calculator_actions],
 		components: { CalculatorButtons, CalculatorTooltip, ScreenWrapper },
 
     data: () => ({
@@ -46,21 +48,25 @@
 		},
 
 		watch: {
+
 			first_number(new_val) {
 				if (new_val && !new_val.toString().includes('.')) {
 					this.first_number = Number.isInteger(Number(new_val)) ? Number(new_val) : 0
 				}
 			},
+
 			second_number(new_val) {
 				if (new_val && !new_val.toString().includes('.')) {
 					this.second_number = Number.isInteger(Number(new_val)) ? Number(new_val) : 0
 				}
 			},
+
 			screen_text(new_val) {
 				new_val.toString().length > 11
 					? this.error_message = 'There are more than 11 chars, but 11 displayed'
 					: ''
 			}
+
 		},
 
 		methods: {
@@ -88,21 +94,6 @@
 				this[button.method_name]()
 			},
 
-
-			clear_screen() {
-				this.first_number = this.second_number = this.action = this.last_operation = ''
-				this.which_number = 'first_number'
-			},
-
-			remove_single_char() {
-				if (this.which_number === 'second_number' && this.second_number === '') {
-					this.action = ''
-					this.which_number = 'first_number'
-				}else { // remove the last char from the string
-					this[this.which_number] = this[this.which_number].toString().slice(0, -1)
-				}
-			},
-
 			calculate_expression(expression, which_number = 'second_number') {
 				if ((this.first_number === '' && this.second_number === '') || this.error_message)
 					return
@@ -113,30 +104,6 @@
 				}
 				this.which_number = which_number
 				this.action = expression
-			},
-
-			divide() {
-				this.calculate_expression('÷')
-			},
-
-			multiply() {
-				this.calculate_expression('*')
-			},
-
-			subtract() {
-				this.calculate_expression('-')
-			},
-
-			add() {
-				this.calculate_expression('+')
-			},
-
-			power() { //executed when '^' pressed
-				this.calculate_expression('^')
-			},
-
-			run_expression() { //executed when '=' pressed
-				this.calculate_expression('', 'first_number')
 			},
 
 			make_float() { //executed when '.' pressed
@@ -150,11 +117,6 @@
 					this[this.which_number] = '0.'
 				else
 					this[this.which_number] += '.'
-			},
-
-
-			toggle_number_sign() {
-				this[this.which_number] = -this[this.which_number]
 			},
 
 			get_and_display_result() {
@@ -189,5 +151,6 @@
     position: relative;
     width: 320px;
     height: 80%;
+	  box-shadow: 1px 54px 43px -26px rgba(0,0,0,0.42);
   }
 </style>
