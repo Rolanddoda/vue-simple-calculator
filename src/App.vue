@@ -1,17 +1,17 @@
 <template>
   <div id="app">
     <calculator />
-    <calculator-informations />
+    <sidebar />
   </div>
 </template>
 
 <script>
   import Calculator from './components/Calculator.vue'
-  import CalculatorInformations from '@/components/CalculatorInformations.vue'
+  import Sidebar from '@/components/Sidebar/Sidebar.vue'
 
   export default {
     name: 'app',
-    components: { Calculator, CalculatorInformations }
+    components: { Calculator, Sidebar }
   }
 </script>
 
@@ -33,5 +33,25 @@
     align-items: center;
 	  background: url('./assets/background.jpg') center center no-repeat;
 	  background-size: cover;
+  }
+
+  kbd { //style for keyboard keys
+    padding:0.1em 0.6em;
+    border:1px solid #ccc;
+    font-size:11px;
+    font-family:Arial,Helvetica,sans-serif;
+    background-color:#f7f7f7;
+    color:#333;
+    -moz-box-shadow:0 1px 0 rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+    -webkit-box-shadow:0 1px 0 rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+    box-shadow:0 1px 0 rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    border-radius:3px;
+    display:inline-block;
+    margin:0 0.1em;
+    text-shadow:0 1px 0 #fff;
+    line-height:1.4;
+    white-space:nowrap;
   }
 </style>

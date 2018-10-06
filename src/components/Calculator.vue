@@ -151,6 +151,7 @@
     position: relative;
     width: 320px;
     height: 80%;
-	  box-shadow: 1px 54px 43px -26px rgba(0,0,0,0.42);
+	  box-shadow: 0px 0px 40px 3px rgba(135,91,135,1);
+	  border-radius: 15px;
   }
 </style>
