@@ -87,13 +87,6 @@
 				}
 			},
 
-			manage_button_action(button) {
-				if (this[this.which_number] !== '')
-					this[this.which_number] = Number(this[this.which_number])
-
-				this[button.method_name]()
-			},
-
 			calculate_expression(expression, which_number = 'second_number') {
 				if ((this.first_number === '' && this.second_number === '') || this.error_message)
 					return

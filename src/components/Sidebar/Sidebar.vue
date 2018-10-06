@@ -1,9 +1,9 @@
 <template>
-	<div :class="['calculator-informations', { hidden: show_sidebar }]">
+	<div :class="['calculator-informations', { hidden: !is_sidebar_open }]">
 
-		<sidebar-triangle :show-sidebar.sync="show_sidebar" />
-		<div class="header">Key Events Informations</div>
-		<sidebar-content />
+		<sidebar-triangle :show-sidebar.sync="is_sidebar_open" />
+		<div class="header" v-if="is_sidebar_open">Key Events Informations</div>
+		<sidebar-content v-if="is_sidebar_open" />
 
 	</div>
 </template>
@@ -17,7 +17,7 @@
 		components: { SidebarContent, SidebarTriangle },
 
 		data: () => ({
-			show_sidebar: true
+			is_sidebar_open: false
 		})
 	}
 </script>
@@ -27,7 +27,7 @@
 
 	.calculator-informations {
 		position: absolute;
-		width: 300px;
+		max-width: 300px;
 		height: 100%;
 		display: grid;
 		grid-template-rows: 50px 1fr;
