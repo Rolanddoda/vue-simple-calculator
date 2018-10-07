@@ -136,6 +136,8 @@
 </script>
 
 <style lang="scss" scoped>
+	@import "../animations";
+
   $deep-blue: #2E335D;
   $light-red: #F05A59;
   $deep-red: #E33D3D;
@@ -144,7 +146,17 @@
     position: relative;
     width: 320px;
     height: 80%;
-	  box-shadow: 0px 0px 40px 3px rgba(135,91,135,1);
+		  box-shadow: -75px 60px 40px -30px rgba(135, 91, 135, .2);
 	  border-radius: 15px;
+	  transform: rotate3d(1, 1, -1, 25deg);
+	  transition: transform .5s ease-in-out;
+	  animation: animateBoxShadowOut .5s ease-in-out forwards;
+	  z-index: 1;
+
+	  &:hover {
+		  transform: rotate3d(0, 0, 0, 0);
+		  animation: animateBoxShadowIn .5s ease-in-out forwards;
+	  }
   }
+
 </style>

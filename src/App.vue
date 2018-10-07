@@ -2,16 +2,18 @@
   <div id="app">
     <calculator />
     <sidebar />
+	  <who-am-i />
   </div>
 </template>
 
 <script>
   import Calculator from './components/Calculator.vue'
   import Sidebar from '@/components/Sidebar/Sidebar.vue'
+  import WhoAmI from '@/components/WhoAmI.vue'
 
   export default {
     name: 'app',
-    components: { Calculator, Sidebar }
+    components: { Calculator, Sidebar, WhoAmI }
   }
 </script>
 
@@ -33,6 +35,8 @@
     align-items: center;
 	  background: url('./assets/background.jpg') center center no-repeat;
 	  background-size: cover;
+	  perspective: 1000px;
+	  overflow: hidden;
   }
 
   kbd { //style for keyboard keys

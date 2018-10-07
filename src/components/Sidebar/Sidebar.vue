@@ -29,6 +29,7 @@
 		position: absolute;
 		max-width: 300px;
 		height: 100%;
+		z-index: 3;
 		display: grid;
 		grid-template-rows: 50px 1fr;
 		grid-template-columns: 250px 50px;
