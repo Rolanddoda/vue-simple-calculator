@@ -57,8 +57,8 @@
 			padding: 10px;
 			opacity: 0;
 			animation: toggleBoxShadow 3s linear infinite 2.5s forwards,
-				         moveCircleIconToBottom .5s ease-in-out 2s forwards,
-					       fadeInScale .5s ease-in 1.2s forwards;
+				         moveCircleIconToBottom .5s ease-in-out 1s forwards,
+					       fadeInScale .5s ease-in .5s forwards;
 
 
 			&.move-icon {
@@ -78,8 +78,8 @@
 			width: 0;
 			height: 0;
 			padding: 0;
-			visibility: hidden;
-			transition: width 1s, height 1s, padding 1s, visibility 1s;
+			opacity: 0;
+			transition: width .5s, height .5s, padding .5s, opacity .5s;
 			transition-delay: .3s;
 			text-align: center;
 			overflow: hidden;
@@ -101,7 +101,7 @@
 				width: 400px;
 				height: 150px;
 				padding: 10px;
-				visibility: visible;
+				opacity: 1;
 				z-index: 3;
 			}
 
