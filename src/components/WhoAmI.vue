@@ -38,6 +38,8 @@
 		src: url('../fonts/LetterText.ttf');
 	}
 
+	$light-red: #F05A59;
+
 	.wrapper {
 		width: 100%;
 		height: 100%;
@@ -46,10 +48,6 @@
 
 		.who-am-i {
 			position: absolute;
-			/*left: 10px;*/
-			/*bottom: 10px;*/
-			/*padding: 10px;*/
-			/*animation: toggleBoxShadow 3s linear infinite 0s forwards, moveCircleIconToLeftBottom .5s ease-in-out 1s forwards;*/
 			border-radius: 20px;
 			background: cyan;
 			width: auto;
@@ -59,8 +57,8 @@
 			padding: 10px;
 			opacity: 0;
 			animation: toggleBoxShadow 3s linear infinite 2.5s forwards,
-				         moveCircleIconToBottom .5s ease-in-out 3s forwards,
-					       fadeInScale .5s ease-in 1s forwards;
+				         moveCircleIconToBottom .5s ease-in-out 2s forwards,
+					       fadeInScale .5s ease-in 1.2s forwards;
 
 
 			&.move-icon {
@@ -73,10 +71,10 @@
 			right: 10px;
 			top: 10px;
 			font-family: 'letter text', sans-serif;
-			font-size: 25px;
+			font-size: 30px;
 			background: white;
 			border-radius: 90px 0 50px 0;
-			border: 2px solid;
+			border: 2px solid $light-red;
 			width: 0;
 			height: 0;
 			padding: 0;
@@ -100,8 +98,8 @@
 			}
 
 			&.change-content {
-				width: 350px;
-				height: 120px;
+				width: 400px;
+				height: 150px;
 				padding: 10px;
 				visibility: visible;
 				z-index: 3;

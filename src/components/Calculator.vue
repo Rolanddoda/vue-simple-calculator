@@ -146,16 +146,15 @@
     position: relative;
     width: 320px;
     height: 80%;
-		  box-shadow: -75px 60px 40px -30px rgba(135, 91, 135, .2);
+	  box-shadow: -75px 60px 40px -30px rgba(135, 91, 135, .7);
 	  border-radius: 15px;
 	  transform: rotate3d(1, 1, -1, 25deg);
-	  transition: transform .5s ease-in-out;
-	  animation: animateBoxShadowOut .5s ease-in-out forwards;
+	  transition: transform .5s ease-in-out, box-shadow 0.3s ease-in-out;
 	  z-index: 1;
 
 	  &:hover {
 		  transform: rotate3d(0, 0, 0, 0);
-		  animation: animateBoxShadowIn .5s ease-in-out forwards;
+		  box-shadow: -1px 50px 49px -25px rgba(135, 91, 135, .7);
 	  }
   }
 
