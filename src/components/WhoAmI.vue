@@ -46,17 +46,25 @@
 
 		.who-am-i {
 			position: absolute;
-			left: 10px;
-			z-index: 3;
-			bottom: 10px;
-			padding: 10px;
+			/*left: 10px;*/
+			/*bottom: 10px;*/
+			/*padding: 10px;*/
+			/*animation: toggleBoxShadow 3s linear infinite 0s forwards, moveCircleIconToLeftBottom .5s ease-in-out 1s forwards;*/
 			border-radius: 20px;
 			background: cyan;
 			width: auto;
-			animation: toggleBoxShadow 3s linear infinite 0s forwards;
+			z-index: 3;
+			right: 10px;
+			top: 10px;
+			padding: 10px;
+			opacity: 0;
+			animation: toggleBoxShadow 3s linear infinite 2.5s forwards,
+				         moveCircleIconToBottom .5s ease-in-out 3s forwards,
+					       fadeInScale .5s ease-in 1s forwards;
+
 
 			&.move-icon {
-				animation: moveCircleIcon .5s ease-in-out forwards;
+				animation: moveCircleIconToTop .5s ease-in-out forwards;
 			}
 		}
 
@@ -74,7 +82,7 @@
 			padding: 0;
 			visibility: hidden;
 			transition: width 1s, height 1s, padding 1s, visibility 1s;
-			transition-delay: .5s;
+			transition-delay: .3s;
 			text-align: center;
 			overflow: hidden;
 			z-index: 2;
@@ -96,6 +104,7 @@
 				height: 120px;
 				padding: 10px;
 				visibility: visible;
+				z-index: 3;
 			}
 
 		}

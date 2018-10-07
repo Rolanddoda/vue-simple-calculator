@@ -33,51 +33,53 @@
 
 }
 
-@keyframes moveCircleIcon {
+@keyframes fadeInScale {
   0% {
-   left: 0;
-   bottom: 0;
+    opacity: 0;
   }
 
-  5% {
-    left: 5%;
-    bottom: 5%;
+  50% {
+    transform: scale(1.5);
+    opacity: 1;
   }
 
-  15% {
-    left: 15%;
-    bottom: 15%;
+  60% {
+    transform: scale(1);
   }
 
-  25% {
-    left: 25%;
-    bottom: 25%;
-  }
-
-  35% {
-    left: 35%;
-    bottom: 35%;
-  }
-
-  45% {
-    left: 45%;
-    bottom: 45%;
-  }
-
-  55% {
-    left: 55%;
-    bottom: 55%;
-  }
-
-  65% {
-    left: 65%;
-    bottom: 65%;
+  70% {
+    transform: scale(1.5);
   }
 
   100% {
-    left: 93%;
-    bottom: 90%;
-    visibility: hidden;
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes moveCircleIconToBottom {
+  from {
+    top: 10px;
+  }
+
+  to {
+    top: 90%;
+  }
+}
+
+@keyframes moveCircleIconToTop {
+  0% {
+    top: 90%;
+    opacity: 1;
+  }
+
+  50% {
+    top: 10px;
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
   }
 }
 
