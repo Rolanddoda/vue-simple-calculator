@@ -145,7 +145,7 @@
   .calculator {
     position: relative;
     width: 320px;
-    height: 80%;
+    height: 600px;
 	  box-shadow: -75px 60px 40px -30px rgba(135, 91, 135, .7);
 	  border-radius: 15px;
 	  transform: rotate3d(1, 1, -1, 25deg);
